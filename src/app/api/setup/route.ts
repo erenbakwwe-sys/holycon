@@ -4,6 +4,8 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { createStaff, getSettings } from "@/lib/firestore";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const logs: string[] = [];
   try {
