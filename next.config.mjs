@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+// Trigger Vercel rebuild with fresh environment variables
 const nextConfig = {
   // Enable PWA manifest link
   async headers() {
