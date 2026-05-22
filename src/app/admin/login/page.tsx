@@ -9,10 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Landmark, Lock, Mail, Loader2 } from "lucide-react";
+import { Landmark, Lock, User, Loader2 } from "lucide-react";
 
 export default function AdminLoginPage() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { user, loading: authLoading } = useAuth();
@@ -27,10 +27,10 @@ export default function AdminLoginPage() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!email || !password) {
+    if (!username || !password) {
       toast({
         title: "Hata",
-        description: "E-posta ve şifre gerekli.",
+        description: "Kullanıcı adı ve şifre gerekli.",
         variant: "destructive",
       });
       return;
@@ -38,7 +38,8 @@ export default function AdminLoginPage() {
 
     setLoading(true);
     try {
-      await signIn(email, password);
+      const emailForAuth = `${username.toLowerCase().trim()}@holycon.com`;
+      await signIn(emailForAuth, password);
       toast({
         title: "Başarılı",
         description: "Giriş yapıldı, yönlendiriliyorsunuz...",
@@ -50,7 +51,7 @@ export default function AdminLoginPage() {
       toast({
         title: "Giriş Hatası",
         description: message.includes("auth/")
-          ? "E-posta veya şifre hatalı."
+          ? "Kullanıcı adı veya şifre hatalı."
           : message,
         variant: "destructive",
       });
@@ -104,20 +105,20 @@ export default function AdminLoginPage() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-coffee-700 text-sm font-semibold">
-                  E-posta
+                <Label htmlFor="username" className="text-coffee-700 text-sm font-semibold">
+                  Kullanıcı Adı
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-coffee-400" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-coffee-400" />
                   <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="admin@holycon.com"
+                    id="username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="admin"
                     className="pl-10 bg-white/80 border-[#DECBAA]/45 text-coffee-950 placeholder:text-coffee-300 focus:border-gold focus:ring-gold/10 h-11 rounded-xl"
                     disabled={loading}
-                    autoComplete="email"
+                    autoComplete="username"
                   />
                 </div>
               </div>

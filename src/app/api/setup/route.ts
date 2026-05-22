@@ -26,22 +26,27 @@ export async function GET() {
       logs.push("Eren adlı personel zaten mevcut.");
     }
 
-    // 3. Create Admin auth user
-    logs.push("Yönetici hesabı (admin@holycon.com) oluşturuluyor...");
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        "admin@holycon.com",
-        "admin123456"
-      );
-      logs.push(`Yönetici hesabı başarıyla oluşturuldu: ${userCredential.user.email}`);
-    } catch (authError: unknown) {
-      const err = authError as { code?: string; message?: string };
-      if (err.code === "auth/email-already-in-use") {
-        logs.push("Yönetici hesabı zaten mevcut (admin@holycon.com).");
-      } else {
-        logs.push(`Yönetici hesabı oluşturulurken hata: ${err.message || "Bilinmeyen hata"}`);
-        throw authError;
+    // 3. Create Admin auth users
+    const admins = [
+      { username: "admin", password: "admin123" },
+      { username: "patron", password: "holyconPatron!" },
+      { username: "mudur", password: "holyconMudur!" }
+    ];
+
+    logs.push("Yönetici hesapları kontrol ediliyor...");
+    for (const admin of admins) {
+      const email = `${admin.username}@holycon.com`;
+      try {
+        await createUserWithEmailAndPassword(auth, email, admin.password);
+        logs.push(`Yönetici hesabı başarıyla oluşturuldu: ${admin.username}`);
+      } catch (authError: unknown) {
+        const err = authError as { code?: string; message?: string };
+        if (err.code === "auth/email-already-in-use") {
+          logs.push(`Yönetici hesabı zaten mevcut: ${admin.username}`);
+        } else {
+          logs.push(`Hata (${admin.username}): ${err.message || "Bilinmeyen hata"}`);
+          // We don't throw to allow other admins to be processed
+        }
       }
     }
 
