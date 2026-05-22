@@ -1,4 +1,4 @@
-# Stampify - Holycon Kafe Dijital Sadakat Sistemi ☕
+# Stampify - Holycon Kafe Dijital Sadakat Sistemi ☕ (Vercel Deploy Ready)
 
 Holycon Kafe için özel olarak geliştirilmiş, QR tabanlı, PWA (Progressive Web App) destekli dijital sadakat sistemi. Müşteriler kahve aldıkça pul (stamp) toplar, 10 pul biriktirdiklerinde ödüllerini kasada personel doğrulamasıyla alırlar.
 
