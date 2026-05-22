@@ -10,6 +10,7 @@ export async function GET() {
     logs.push("Setup/Seed işlemi başlatıldı.");
 
     // 1. Initialize settings
+    logs.push(`Sistem Kontrolü: NEXT_PUBLIC_FIREBASE_PROJECT_ID = ${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "BOŞ (Yüklenemedi!)"}`);
     logs.push("Varsayılan ayarlar kontrol ediliyor...");
     const settings = await getSettings();
     logs.push(`Ayarlar hazır: ${JSON.stringify(settings)}`);
